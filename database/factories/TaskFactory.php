@@ -18,7 +18,7 @@ class TaskFactory extends Factory
     {
         return [
             'task' => fake()->text(20),
-            // 'description' => fake()->text(50),
+            'description' => fake()->text(50),
             // 'image' => fake()->imageUrl(),
         ];
     }
