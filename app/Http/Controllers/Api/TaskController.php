@@ -15,7 +15,8 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        $tasks = Task::all();
+        // $tasks = Task::all();
+        $tasks = Task::orderBy('created_at', 'desc')->get();
         return response()->json($tasks);
     }
 
