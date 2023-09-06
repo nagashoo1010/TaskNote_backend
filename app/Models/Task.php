@@ -12,7 +12,9 @@ class Task extends Model
     protected $table = 'tasks';
 
     protected $fillable = [
-        'task'
+        'task',
+        'description',
+        'image'
     ];
 
     protected $guarded = [
