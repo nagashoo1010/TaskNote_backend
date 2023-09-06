@@ -39,8 +39,10 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $task = $request->task;
+        $description = $request->description;
         $tasks =Task::create([
             'task' => $task,
+            'description' => $description,
         ]);
 
         return response()->json($tasks);
