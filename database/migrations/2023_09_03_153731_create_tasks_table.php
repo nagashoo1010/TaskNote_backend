@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->text('task')->nullable();
             $table->text('description');
+            $table->string('image_path');
             $table->boolean('status')->default(false);
             $table->timestamps();
         });

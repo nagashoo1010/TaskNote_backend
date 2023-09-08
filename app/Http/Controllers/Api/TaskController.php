@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
 
 class TaskController extends Controller
 {
@@ -38,14 +40,34 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $task = $request->task;
-        $description = $request->description;
-        $tasks =Task::create([
-            'task' => $task,
-            'description' => $description,
-        ]);
 
-        return response()->json($tasks);
+        try {
+            if ($request->hasFile('image')) {
+                // ファイルをpublicディレクトリに保存
+                Log::debug($request);
+
+                $imagePath = $request->file('image')->store('public');
+
+                // 保存したファイルのURLを取得
+                $imageUrl = asset(str_replace('public', 'storage', $imagePath));
+
+                $task = $request->task;
+                $description = $request->description;
+
+                // 画像パスとタスク情報をデータベースに保存するなどの処理を追加できます
+                $tasks = Task::create([
+                    'task' => $task,
+                    'description' => $description,
+                    'image_path' => $imageUrl,
+                ]);
+
+                return response()->json($tasks);
+            } else {
+                return response()->json(['message' => 'ファイルが選択されていません'], 400);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'アップロードに失敗しました'], 500);
+        }
     }
 
     /**
