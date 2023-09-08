@@ -14,6 +14,7 @@ class Task extends Model
     protected $fillable = [
         'task',
         'description',
+        'image_path',
         'image'
     ];
 
